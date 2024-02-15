@@ -1,20 +1,16 @@
-# Estágio de Construção
-FROM maven:3.8.4-openjdk-11 AS build
+FROM ubuntu:latest AS build
 
-WORKDIR /app
-
+RUN apt-get update
+RUN apt-get install openjdk-11-jdk -y  
 COPY . .
 
-# Utilize um profile de construção (opcional, se aplicável)
-# RUN mvn clean install -P build
+RUN apt-get install maven -y
+RUN mvn clean install
 
-# Estágio de Execução
 FROM openjdk:11-jdk-slim
 
-WORKDIR /app
+EXPOSE 8080 
 
-COPY --from=build /app/target/java_1st_api-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /target/java_1st_api-0.0.1-SNAPSHOT.jar app.jar
 
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT [ "java", "-jar", "app.jar"]
