@@ -13,4 +13,4 @@ EXPOSE 8083
 
 COPY --from=build /target/java_1st_api-0.0.1-SNAPSHOT.jar app.jar
 
-ENTRYPOINT [ "java", "-jar", "/target/java_1st_api-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT [ "java", "-jar", "/app.jar]
