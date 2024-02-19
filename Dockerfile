@@ -5,12 +5,13 @@ RUN apt-get install openjdk-11-jdk -y
 COPY . .
 
 RUN apt-get install maven -y
-RUN mvn clean install
+RUN mvn --version 
+RUN mvn clean install -DslipTests
 
 FROM openjdk:11-jdk-slim
 
-EXPOSE 8080 
+EXPOSE 8083
 
 COPY --from=build /target/java_1st_api-0.0.1-SNAPSHOT.jar app.jar
 
-ENTRYPOINT [ "java", "-jar", "app.jar"]
+ENTRYPOINT [ "java", "-jar", "/target/java_1st_api-0.0.1-SNAPSHOT.jar app.jar"]
